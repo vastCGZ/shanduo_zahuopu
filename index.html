@@ -170,11 +170,11 @@
             <div class="title">死肥宅快乐水</div>
             <div class="subtitle">重量50000ml/缸</div>
             <div class="number dis_flex">
-              <span class="price">￥500.0000<span class="col_hui">/缸</span></span>
+              <span class="price">￥500.0000</span>
               <p class="plan dis_flex">
-                <a href="javascript:" class="add_left"></a>
-                <span>1</span>
-                <a href="javascript:" class="add_right"></a>
+                <a href="javascript:" @click.prevent="addoff" class="add_left" v-if="num!=0"></a>
+                <span v-if="num!=0">{{num}}</span>
+                <a href="javascript:"@click.prevent="addon" class="add_right"></a>
               </p>
             </div>
           </div>

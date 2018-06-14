@@ -193,7 +193,6 @@ body{
 
 /*iphone5*/
 @media (max-width: 321px){
-
   .item-right {
     width: 63%;
   }
@@ -243,8 +242,8 @@ body{
 }
 /*加减*/
 .plan {
-  justify-content: space-between;
-  width: 60px;
+  justify-content: flex-end;
+  width: 70px;
   align-items: center;
 }
 
@@ -264,6 +263,9 @@ body{
 .plan > span{
   font-size: 12px;
   color: #999999;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
 }
 .order {
   position: absolute;
@@ -429,7 +431,7 @@ div.title_header>div:last-child>img{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 1000;
+  z-index: 1100;
   top: 0;
   left: 0;
   width: 100%;
