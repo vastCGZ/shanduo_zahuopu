@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="../js/jquery-3.3.1.js"></script>
+  <script src="../js/bootstrap.js"></script>
+  <title>首页</title>
+</head>
+<body>
+  <div id="vueData">
+    <header class="shop">
+      <div class="title_header dis_flex">
+        <div>
+          <img src="../img/return/return_3.png" alt="">
+        </div>
+        <div>
+          <span>闪多便利超市</span>
+        </div>
+        <div></div>
+      </div>
+      <div class="dis_flex">
+        <div class="dynamic_pic title_pic">
+          <div style="background-image: url('img/rectangle_2.png')"></div>
+        </div>
+        <div class="dis_flex">
+          <span>公告:</span>
+          <span>需要香烟的请在备注栏备注，谢谢!</span>
+        </div>
+      </div>
+    </header>
+    <div class="body">
+      <article id="menu">
+        <div class="swiper-container">
+          <div class="dis_flex">
+            <div>
+              <div class="swiper-container-div">
+                <!--类别名-->
+                <ul class="swiper-container-ul" id="OneTab">
+                  <!--类别名1切换-->
+                  <li class="swiper-container-ul-li active">
+                    <a href="#One1" data-toggle="tab">热门</a>
+                  </li>
+                  <!--类别名2切换-->
+                  <li class="swiper-container-ul-li">
+                    <a href="#One2">热销</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="swiper-wrapper tab-content">
+              <!--类别1-->
+              <div class="swiper-slide tab-pane fade in active" id="One1">
+                <div class="content">
+                  <div class="right">
+                    <ul class="myUL">
+                      <!--类别商品-->
+                      <li>
+                        <div>
+                          <div class="item">
+                            <div class="item-left">
+                              <div class="item-img">
+                                <div class="dynamic_pic">
+                                  <div style="background-image: url('../img/icon/pho.png')"></div>
+                                  <img class="dynamic_pic_img dis_none" src="../img/icon/pho.png" alt="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item-right dis_flex">
+                              <div class="title">死肥宅快乐水</div>
+                              <div class="subtitle">50000ml/缸</div>
+                              <div class="number dis_flex">
+                                <span class="price">￥500.0000</span>
+                                <p class="plan dis_flex">
+                                  <a href="javascript:" @click.prevent="addoff" class="add_left" v-if="num!=0"></a>
+                                  <span v-if="num!=0">{{num}}</span>
+                                  <a href="javascript:"@click.prevent="addon" class="add_right"></a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <!--类别商品-->
+                      <li>
+                        <div>
+                          <div class="item">
+                            <div class="item-left">
+                              <div class="item-img">
+                                <div class="dynamic_pic">
+                                  <div style="background-image: url('../img/icon/bg-1.png')"></div>
+                                  <img class="dynamic_pic_img dis_none" src="../img/icon/bg-1.png" alt="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item-right dis_flex">
+                              <div class="title">死肥宅快乐水</div>
+                              <div class="subtitle">50000ml/缸</div>
+                              <div class="number dis_flex">
+                                <span class="price">￥500.0000</span>
+                                <p class="plan dis_flex">
+                                  <a href="javascript:" @click.prevent="addoff" class="add_left" v-if="num!=0"></a>
+                                  <span v-if="num!=0">{{num}}</span>
+                                  <a href="javascript:"@click.prevent="addon" class="add_right"></a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div style="clear:both"></div>
+                </div>
+              </div>
+              <!--类别2-->
+              <div class="swiper-slide tab-pane fade" id="One2">
+                <div class="content">
+                  <div class="right">
+                    <ul class="myUL">
+                      <!--类别商品-->
+                      <li>
+                        <div>
+                          <div class="item">
+                            <div class="item-left">
+                              <div class="item-img">
+                                <div class="dynamic_pic">
+                                  <div style="background-image: url('../img/icon/icon_0.png')"></div>
+                                  <img class="dynamic_pic_img dis_none" src="../img/icon/icon_0.png" alt="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item-right dis_flex">
+                              <div class="title">死肥宅快乐水</div>
+                              <div class="subtitle">50000ml/缸</div>
+                              <div class="number dis_flex">
+                                <span class="price">￥500.0000</span>
+                                <p class="plan dis_flex">
+                                  <a href="javascript:" @click.prevent="addoff" class="add_left" v-if="num!=0"></a>
+                                  <span v-if="num!=0">{{num}}</span>
+                                  <a href="javascript:"@click.prevent="addon" class="add_right"></a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div style="clear:both"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--商品详情-->
+        <div id="outerdiv" class="dis_flex">
+          <div class="dis_flex">
+            <img id="bigimg" src="" />
+            <div class="title">死肥宅快乐水</div>
+            <div class="subtitle">重量50000ml/缸</div>
+            <div class="number dis_flex">
+              <span class="price">￥500.0000<span class="col_hui">/缸</span></span>
+              <p class="plan dis_flex">
+                <a href="javascript:" class="add_left"></a>
+                <span>1</span>
+                <a href="javascript:" class="add_right"></a>
+              </p>
+            </div>
+          </div>
+          <img src="img/pic_off.png" alt="">
+        </div>
+      </article>
+    </div>
+    <footer>
+      <div class="dis_flex">
+        <a href="#" @click.prevent="gwcToggle()">购物车:&nbsp;&nbsp;&nbsp;&nbsp;￥500.0000</a>
+        <a href="payment.html">去结算</a>
+      </div>
+      <div class=" gwcTog">
+        <div class="dis_flex">
+          <div class="dis_flex">
+            <img src="img/delete.png" alt="">
+            <span class="col_hui">清空购物车</span>
+          </div>
+          <!--购物车商品-->
+          <div class="dis_flex">
+            <!--购物车单个商品-->
+            <div class="dis_flex">
+              <div class="dis_flex">
+                <div class="title">死肥宅快乐水</div>
+                <div class="subtitle">50000ml/缸</div>
+              </div>
+              <div class="dis_flex">
+                <div class="number dis_flex">
+                  <span class="price">￥500.0000</span>
+                  <p class="plan dis_flex">
+                    <a href="javascript:" class="add_left"></a>
+                    <span>1</span>
+                    <a href="javascript:" class="add_right"></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="dis_flex">
+              <div class="dis_flex">
+                <div class="title">死肥宅快乐水</div>
+                <div class="subtitle">50000ml/缸</div>
+              </div>
+              <div class="dis_flex">
+                <div class="number dis_flex">
+                  <span class="price">￥500.0000</span>
+                  <p class="plan dis_flex">
+                    <a href="javascript:" class="add_left"></a>
+                    <span>1</span>
+                    <a href="javascript:" class="add_right"></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+        el:'#vueData',
+        data:{
+          num:0
+        },
+        mounted: function() {
+          //隐藏购物车
+          $('.gwcTog').hide();
+          //图片放大
+          $('#outerdiv').hide();
+          $(function(){
+            $(".item-left").click(function(){
+              var _this = $(this);//将当前的pimg元素作为_this传入函数
+              vm.imgShow("#outerdiv", "#bigimg", _this);
+            });
+            $(".title").click(function(){
+              var _this = $(this);//将当前的pimg元素作为_this传入函数
+              vm.imgShow("#outerdiv", "#bigimg", _this);
+            });
+            $(".subtitle").click(function(){
+              var _this = $(this);//将当前的pimg元素作为_this传入函数
+              vm.imgShow("#outerdiv", "#bigimg", _this);
+            });
+            $(".price").click(function(){
+              var _this = $(this);//将当前的pimg元素作为_this传入函数
+              vm.imgShow("#outerdiv", "#bigimg", _this);
+            });
+          });
+          //好友，群组切换
+          $('#OneTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+          });
+        },
+        methods: {
+          imgShow: function (outerdiv, bigimg, _this) {
+            var src1 = _this.find('img').attr("src");//获取当前点击的pimg元素中的src属性
+            var src2 = _this.parent().prev().find('img').attr("src");
+            var src3 = _this.parent().parent().prev().find('img').attr("src");
+            $(bigimg).attr("src", src1);//设置#bigimg元素的src属性
+            $(bigimg).attr("src", src2);//设置#bigimg元素的src属性
+            $(bigimg).attr("src", src3);//设置#bigimg元素的src属性
+
+            $(outerdiv).fadeIn("fast");
+            $('#outerdiv>img').click(function () {//再次点击淡出消失弹出层
+              $(outerdiv).fadeOut("fast");
+            });
+          },
+          gwcToggle:function () {
+            $('.gwcTog').toggle()
+          },
+          addoff:function () {
+            this.num--
+          },
+          addon:function () {
+            this.num++
+          }
+        }
+      })
+</script>
+</html>
