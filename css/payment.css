@@ -137,12 +137,13 @@ div.title_header>div:last-child>img{
 }
 .body_commodity>div>div:nth-child(2){
   padding-left: 10px;
-  width: 58%;
+  width: 51%;
   flex-direction: column;
   justify-content: space-between;
 }
 .body_commodity>div>div:nth-child(3){
-  width: 24%;
+  width: 28%;
+  text-align: right;
 }
 /*商品图片*/
 .body_commodity_pic{

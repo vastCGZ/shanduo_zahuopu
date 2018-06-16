@@ -185,14 +185,14 @@ body{
 }
 
 /*iphone6*/
-@media (min-width: 321px) and (max-width: 376px){
+@media (min-width: 376px) and (max-width: 400px){
   .item-right {
     width: 70%;
   }
 }
 
 /*iphone5*/
-@media (max-width: 321px){
+@media (min-width: 321px) and (max-width: 375px){
   .item-right {
     width: 63%;
   }
