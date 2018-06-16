@@ -17,7 +17,7 @@ ul,li,p{
   list-style-type:none;
 }
 a:focus, a:active, a:focus-within, a:visited, a:hover{
-  text-decoration: none;
+  text-decoration: none!important;
 }
 body *{
   -webkit-tap-highlight-color: transparent;
@@ -184,15 +184,14 @@ body{
 }
 
 /*iphone6*/
-@media (min-width: 321px) and (max-width: 376px){
+@media (min-width: 376px) and (max-width: 400px){
   .item-right {
     width: 70%;
   }
 }
 
 /*iphone5*/
-@media (max-width: 321px){
-
+@media (min-width: 321px) and (max-width: 375px){
   .item-right {
     width: 63%;
   }
@@ -242,8 +241,8 @@ body{
 }
 /*加减*/
 .plan {
-  justify-content: space-between;
-  width: 60px;
+  justify-content: flex-end;
+  width: 70px;
   align-items: center;
 }
 
@@ -263,6 +262,9 @@ body{
 .plan > span{
   font-size: 12px;
   color: #999999;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
 }
 .order {
   position: absolute;
@@ -428,7 +430,7 @@ div.title_header>div:last-child>img{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 1000;
+  z-index: 1100;
   top: 0;
   left: 0;
   width: 100%;
@@ -535,7 +537,7 @@ footer a:focus, footer a:active, footer a:focus-within, footer a:visited, footer
 }
 /*购物车单个商品*/
 .gwcTog>div>div:last-child>div{
-  height: 50px;
+  /*height: 50px;*/
   align-items: center;
   border-top: 1px solid #F4F4F4;
 }
