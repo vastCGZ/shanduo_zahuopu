@@ -55,7 +55,7 @@ article{
   line-height: 40px;
   text-align: center;
 }
-.swiper-wrapper:nth-child(3) .frame>div{
+.swiper-wrapper:nth-child(3) .frame>div>div{
   justify-content: space-around;
   height: 40px;
   align-items: center;

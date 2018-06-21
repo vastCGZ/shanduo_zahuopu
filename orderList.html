@@ -105,12 +105,18 @@
           <div class="frame">
             <!--没有订单时显示-->
             <!--<span class="dis_inli">没有订单</span>-->
-            <div class="dis_flex">
-              <input type="date">
-              <span>至</span>
-              <input type="date">
+            <div>
+              <div class="dis_flex">
+                <input type="date">
+                <span>至</span>
+                <input type="date">
+              </div>
+              <div class="dis_flex">
+                <p>订单：15</p>
+                <p>总额：3块8</p>
+              </div>
             </div>
-            <ul :style="{maxHeight: winHeight+'px'}">
+            <ul :style="{maxHeight: winHeight-80+'px'}">
               <li class="item">
                 <div class="item-right">
                   <div class="title">蚂蚁上树</div>
@@ -148,7 +154,7 @@
     },
     mounted: function () {
       //获取屏幕分辨率高度
-      this.winHeight = window.screen.height-140;
+      this.winHeight = window.screen.height-100;
     },
     methods: {}
   });
