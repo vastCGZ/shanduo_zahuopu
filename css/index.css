@@ -17,7 +17,7 @@ ul,li,p{
   list-style-type:none;
 }
 a:focus, a:active, a:focus-within, a:visited, a:hover{
-  text-decoration: none;
+  text-decoration: none!important;
 }
 body *{
   -webkit-tap-highlight-color: transparent;
@@ -91,7 +91,6 @@ body{
 
 .swiper-container-ul-li {
   width: 100%;
-  height: 35px;
   line-height: 35px;
   text-align: left;
   display: inline-block;
@@ -538,7 +537,7 @@ footer a:focus, footer a:active, footer a:focus-within, footer a:visited, footer
 }
 /*购物车单个商品*/
 .gwcTog>div>div:last-child>div{
-  height: 50px;
+  /*height: 50px;*/
   align-items: center;
   border-top: 1px solid #F4F4F4;
 }
