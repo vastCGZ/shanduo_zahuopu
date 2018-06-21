@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="../js/jquery-3.3.1.js"></script>
-    <script src="../js/service.js"></script>
     <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
+    <script src="../js/service.js"></script>
     <script src="js/store_service.js"></script>
     <title>首页</title>
 </head>
@@ -190,24 +190,6 @@
             $('.gwcTog').hide();
             //图片放大
             $('#outerdiv').hide();
-            $(function () {
-                $(".item-left").click(function () {
-                    var _this = $(this);//将当前的pimg元素作为_this传入函数
-                    vm.imgShow("#outerdiv", "#bigimg", _this);
-                });
-                $(".title").click(function () {
-                    var _this = $(this);//将当前的pimg元素作为_this传入函数
-                    vm.imgShow("#outerdiv", "#bigimg", _this);
-                });
-                $(".subtitle").click(function () {
-                    var _this = $(this);//将当前的pimg元素作为_this传入函数
-                    vm.imgShow("#outerdiv", "#bigimg", _this);
-                });
-                $(".price").click(function () {
-                    var _this = $(this);//将当前的pimg元素作为_this传入函数
-                    vm.imgShow("#outerdiv", "#bigimg", _this);
-                });
-            });
         },
         methods: {
             imgShow() {

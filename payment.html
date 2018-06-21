@@ -43,7 +43,7 @@
             <div class="dis_flex" v-if="contactInfo" @click="selectAddress">
                 <!--位置-->
                 <div>
-                    <span>收货地址:{{contactInfo.receveraddr}}</span>
+                    <span>收货地址:{{contactInfo.cityName}}/{{contactInfo.countryName}}/{{contactInfo.receveraddr}}</span>
                 </div>
                 <!--人物信息-->
                 <div>
@@ -119,6 +119,8 @@
                 wx.openAddress({
                     success: function (res) {
                         vm.contactInfo = {
+                            cityName: res.cityName,
+                            countryName: res.countryName,
                             recevername: res.userName,
                             recevertel: res.telNumber,
                             receveraddr: res.detailInfo
@@ -131,7 +133,7 @@
                     let commodityOrder = {
                         openid: openid,
                         remarks: vm.remarks,
-                        userAddress: vm.contactInfo.recevername + ';' + vm.contactInfo.recevertel + ';' + vm.contactInfo.receveraddr
+                        userAddress: vm.contactInfo.recevername + ';' + vm.contactInfo.recevertel + ';' + vm.contactInfo.cityName + '/' + vm.contactInfo.countryName + '/' + vm.contactInfo.receveraddr
                     };
                     $.each(vm.cart, function (i, commdity) {
                         orderDetails.push({
@@ -162,8 +164,8 @@
                                     signType: res.data.signType,
                                     paySign: res.data.paySign,
                                     success: function (res) {
-										emptyDB();
-                                        location.href='pay_success.html';
+                                        emptyDB();
+                                        location.href = 'pay_success.html';
                                     }, fail: function (res) {
                                         toast('支付失败');
                                     }, cancel: function (res) {
