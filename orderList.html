@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/orderList.css">
+  <link rel="stylesheet" type="text/css" href="../css/dropload.css">
+  <title>订单管理</title>
+</head>
+<body>
+<div id="vueData">
+  <header>
+    <div class="title_header dis_flex">
+      <div>
+        <img src="../img/return/return_1.png" alt="">
+      </div>
+      <div>
+        <span>订单管理</span>
+      </div>
+      <div></div>
+    </div>
+  </header>
+  <article id="menu">
+    <div class="swiper-container">
+      <div class="swiper-container-div">
+        <ul class="swiper-container-ul dis_flex">
+          <li class="swiper-container-ul-li actives">
+            <a href="javascript:;" class="dis_inli">待确认</a>
+          </li>
+          <li class="swiper-container-ul-li">
+            <a href="javascript:;" class="dis_inli">待配送</a>
+          </li>
+          <li class="swiper-container-ul-li">
+            <a href="javascript:;" class="dis_inli">已完成</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content">
+      <!--待确认-->
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="frame">
+            <!--没有订单时显示-->
+            <!--<span class="dis_inli">没有订单</span>-->
+            <ul :style="{maxHeight: winHeight+'px'}">
+              <li class="item">
+                <div class="item-right">
+                  <div class="title">蚂蚁上树</div>
+                  <div class="subtitle">
+                    <span>备注:</span>
+                    <span>我要不是口味正宗的的蚂蚁上树，而是真的“蚂蚁”上树</span>
+                  </div>
+                  <div class="number dis_flex">
+                    <span class="price">￥25</span>
+                    <div class="dis_flex">
+                      <a href="javascript:" onclick="">接单</a>
+                      <a href="javascript:" onclick="">拒绝</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--待配送-->
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="display:none;">
+          <div class="frame">
+            <!--没有订单时显示-->
+            <!--<span class="dis_inli">没有订单</span>-->
+            <ul :style="{maxHeight: winHeight+'px'}">
+              <li class="item">
+                <div class="item-right">
+                  <div class="title">蚂蚁上树</div>
+                  <div class="subtitle">
+                    <span>备注:</span>
+                    <span>我要真正的蚂蚁上树</span>
+                  </div>
+                  <div class="number dis_flex">
+                    <span class="price">￥125</span>
+                    <div class="dis_flex">
+                      <a href="javascript:" onclick="">已完成</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--已完成-->
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="display:none;">
+          <div class="frame">
+            <!--没有订单时显示-->
+            <!--<span class="dis_inli">没有订单</span>-->
+            <div>
+              <div class="dis_flex">
+                <input type="date">
+                <span>至</span>
+                <input type="date">
+              </div>
+              <div class="dis_flex">
+                <p>订单：15</p>
+                <p>总额：3块8</p>
+              </div>
+            </div>
+            <ul :style="{maxHeight: winHeight-80+'px'}">
+              <li class="item">
+                <div class="item-right">
+                  <div class="title">蚂蚁上树</div>
+                  <div class="subtitle">
+                    <span>备注:</span>
+                    <span>蚂蚁上树正宗点</span>
+                  </div>
+                  <div class="number dis_flex">
+                    <span class="price">￥25</span>
+                    <div class="dis_flex">
+                      <a href="javascript:" onclick="">删除</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../js/dropload.min.js"></script>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/utils.js"></script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  let vm = new Vue({
+    el: '#vueData',
+    data: {
+      //获取屏幕分辨率高度
+      winHeight:null
+    },
+    mounted: function () {
+      //获取屏幕分辨率高度
+      this.winHeight = window.screen.height-100;
+    },
+    methods: {}
+  });
+  var itemIndex = 0;
+  $(function () {
+    // tab
+    $('.swiper-container-ul li').on('click', function () {
+      var alink = $(this);
+      var selectId = alink.index();
+      console.log('aaa')
+      if (itemIndex === selectId) {
+        return;
+      }
+      itemIndex = selectId;
+      $(alink).addClass('actives').siblings('li').removeClass('actives');
+      $('.swiper-wrapper').eq(itemIndex).show().children().show().parent().siblings('.swiper-wrapper').hide();
+    });
+  })
+</script>
+</html>

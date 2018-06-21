@@ -256,7 +256,8 @@
                     });
                 });
 
-            }, changer(classifyId) {
+            },
+            changer(classifyId) {
                 let selectId = $(event.currentTarget).parent().index();
                 if (itemIndex === selectId) {
                     return;
@@ -280,7 +281,8 @@
             onclick3(index) {
                 vm.currentCommodity = vm.commodityArray[index];
                 vm.imgShow()
-            }, submitOrderView() {
+            },
+            submitOrderView() {
                 if (vm.totalCount > 0) {
                     location.href = 'payment.html';
                 } else {
