@@ -68,7 +68,7 @@
                       <li>
                         <div>
                           <div class="item">
-                            <div class="item-left">
+                            <div class="item-left" @click="onclick1">
                               <div class="item-img">
                                 <div class="dynamic_pic">
                                   <div style="background-image: url('../img/icon/pho.png')"></div>
@@ -77,10 +77,10 @@
                               </div>
                             </div>
                             <div class="item-right dis_flex">
-                              <div class="title">死肥宅快乐水</div>
-                              <div class="subtitle">50000ml/缸</div>
+                              <div class="title" @click="onclick2">死肥宅快乐水</div>
+                              <div class="subtitle" @click="onclick2">50000ml/缸</div>
                               <div class="number dis_flex">
-                                <span class="price">￥500.0000</span>
+                                <span class="price" @click="onclick3">￥500.0000</span>
                                 <p class="plan dis_flex">
                                   <a href="javascript:" @click.prevent="addoff" class="add_left" v-if="num!=0"></a>
                                   <span v-if="num!=0">{{num}}</span>
@@ -95,7 +95,7 @@
                       <li>
                         <div>
                           <div class="item">
-                            <div class="item-left">
+                            <div class="item-left" @click="onclick1">
                               <div class="item-img">
                                 <div class="dynamic_pic">
                                   <div style="background-image: url('../img/icon/bg-1.png')"></div>
@@ -104,10 +104,10 @@
                               </div>
                             </div>
                             <div class="item-right dis_flex">
-                              <div class="title">死肥宅快乐水</div>
-                              <div class="subtitle">50000ml/缸</div>
+                              <div class="title" @click="onclick2">死肥宅快乐水</div>
+                              <div class="subtitle" @click="onclick2">50000ml/缸</div>
                               <div class="number dis_flex">
-                                <span class="price">￥500.0000</span>
+                                <span class="price" @click="onclick3">￥500.0000</span>
                                 <p class="plan dis_flex">
                                   <a href="javascript:" @click.prevent="addoff" class="add_left" v-if="num!=0"></a>
                                   <span v-if="num!=0">{{num}}</span>
@@ -246,24 +246,6 @@
           $('.gwcTog').hide();
           //图片放大
           $('#outerdiv').hide();
-          $(function(){
-            $(".item-left").click(function(){
-              var _this = $(this);//将当前的pimg元素作为_this传入函数
-              vm.imgShow("#outerdiv", "#bigimg", _this);
-            });
-            $(".title").click(function(){
-              var _this = $(this);//将当前的pimg元素作为_this传入函数
-              vm.imgShow("#outerdiv", "#bigimg", _this);
-            });
-            $(".subtitle").click(function(){
-              var _this = $(this);//将当前的pimg元素作为_this传入函数
-              vm.imgShow("#outerdiv", "#bigimg", _this);
-            });
-            $(".price").click(function(){
-              var _this = $(this);//将当前的pimg元素作为_this传入函数
-              vm.imgShow("#outerdiv", "#bigimg", _this);
-            });
-          });
           //好友，群组切换
           $('#OneTab a').click(function (e) {
             e.preventDefault();
@@ -271,17 +253,11 @@
           });
         },
         methods: {
-          imgShow: function (outerdiv, bigimg, _this) {
-            var src1 = _this.find('img').attr("src");//获取当前点击的pimg元素中的src属性
-            var src2 = _this.parent().prev().find('img').attr("src");
-            var src3 = _this.parent().parent().prev().find('img').attr("src");
-            $(bigimg).attr("src", src1);//设置#bigimg元素的src属性
-            $(bigimg).attr("src", src2);//设置#bigimg元素的src属性
-            $(bigimg).attr("src", src3);//设置#bigimg元素的src属性
-
-            $(outerdiv).fadeIn("fast");
+          imgShow: function (pic) {
+            $('#bigimg').attr("src", pic);//设置#bigimg元素的src属性
+            $('#outerdiv').fadeIn("fast");
             $('#outerdiv>img').click(function () {//再次点击淡出消失弹出层
-              $(outerdiv).fadeOut("fast");
+              $('#outerdiv').fadeOut("fast");
             });
           },
           gwcToggle:function () {
@@ -292,6 +268,18 @@
           },
           addon:function () {
             this.num++
+          },
+          onclick1:function (event) {
+            let src = event.target.nextElementSibling.src;//获取当前点击的pimg元素中的src属性
+            vm.imgShow(src)
+          },
+          onclick2:function (event) {
+            let src = event.target.parentNode.previousElementSibling.childNodes[0].childNodes[0].childNodes[0].nextElementSibling.src;//获取当前点击的pimg元素中的src属性
+            vm.imgShow(src)
+          },
+          onclick3:function (event) {
+            let src = event.target.parentNode.parentNode.previousElementSibling.childNodes[0].childNodes[0].childNodes[0].nextElementSibling.src;//获取当前点击的pimg元素中的src属性
+            vm.imgShow(src)
           }
         }
       })

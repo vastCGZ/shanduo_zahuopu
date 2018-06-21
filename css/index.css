@@ -2,10 +2,10 @@
 body {
   word-wrap: break-word;
   font-family: Helvetica, Arial;
-  /*这里是设置字体，Helvetica字体在移动端各系统都支持（都不支持微软雅黑）*/
-  color: #333;
-  -webkit-text-size-adjust: none;
-  /*设置文本不会放大，普通网页在移动端打开文本是会跟随网页结构缩放的*/
+/*这里是设置字体，Helvetica字体在移动端各系统都支持（都不支持微软雅黑）*/
+color: #333;
+-webkit-text-size-adjust: none;
+/*设置文本不会放大，普通网页在移动端打开文本是会跟随网页结构缩放的*/
 }
 html{
   -webkit-text-size-adjust:none;
