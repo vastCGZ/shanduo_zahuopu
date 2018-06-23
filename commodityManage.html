@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>商品</title>
+    <link rel="stylesheet" type="text/css" href="css/commodity.css">
+    <link rel="stylesheet" type="text/css" href="../css/mescroll.min.css">
+</head>
+<body>
+<header>
+    <div class="thead">
+        <a href="#"><img src="img/return_1.png">商品管理</a>
+    </div>
+</header>
+<article id="menu">
+    <div class="frame">
+        <ul id="commoditys" class="mescroll">
+            <li v-for="(commodity,index) in commodities">
+                <div class="item">
+                    <div class="item-left">
+                        <div class="item-img"><img :src="commodity.introducePicture"></div>
+                    </div>
+                    <div class="item-right">
+                        <div class="title">{{commodity.name}}</div>
+                        <div class="category"><a href="javascript:"
+                                                 @click="gotoEditCommodityView(commodity.id)">修改</a><a
+                                href="#" @click="deleteCommodity(index,commodity.id)">删除</a></div>
+                        <div class="number"><span class="price">￥{{commodity.price}}</span>
+                            <a href="javascript:"
+                               @click="commodityVisible(index)"><span
+                                    v-if="commodity.visible">下架</span><span v-else>上架</span></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</article>
+<footer>
+    <div class="tfoot">
+        <a href="addCommodity.html" class="shopping"><span>添加商品</span></a>
+        <a href="orderList.html" class="settlement"><span>订单管理</span></a>
+    </div>
+</footer>
+<script type="text/javascript" src="../js/layer.js"></script>
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/mescroll.min.js"></script>
+</body>
+<script>
+    // 页数
+    let index = 1;
+    let totalPage = 0;
+    const pageCount = 20;
+    let vm = new Vue({
+        el: '#menu',
+        data: {
+            commodities: []
+        }, mounted: function () {
+            let that = this;
+            that.mescroll = new MeScroll("commoditys", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+                up: {
+                    callback: that.upCallback, //上拉回调
+                }
+            });
+        }, methods: {
+            upCallback(page) {
+                let that = this;
+                if (page.num === 1) {
+                    emptyData();
+                }
+                loadData(function () {
+                    if (totalPage > index) {
+                        index++;
+                        that.mescroll.endSuccess(pageCount, true);
+                    } else {
+                        that.mescroll.endSuccess(pageCount, false);
+                    }
+                }, function () {
+                    that.mescroll.endErr();
+                });
+            },
+            gotoEditCommodityView(commodityId) {
+                location.href = 'editCommodity.html?commodityId=' + commodityId;
+            }, commodityVisible(key) {
+                let commodity = vm.commodities[key];
+                layer.open({
+                    content: "执行这个操作？"
+                    , btn: ['是的', '取消']
+                    , yes: function (index) {
+                        $.getJSON('/yapingzh/commodityVisible.do', {
+                            "commodity.id": commodity.id,
+                            "commodity.visible": !commodity.visible
+                        }, function (result) {
+                            if (result.success) {
+                                vm.commodities[key].visible = !commodity.visible;
+                                toast('操作成功');
+                            } else {
+                                toast('操作失败');
+                            }
+                        });
+                        layer.close(index);
+                    }
+                });
+            }, deleteCommodity(key, commodityId) {
+                layer.open({
+                    content: "要删除吗？"
+                    , btn: ['是的', '取消']
+                    , yes: function (index) {
+                        $.getJSON('/yapingzh/deleteCommodity.do', {
+                            "commodity.id": commodityId
+                        }, function (result) {
+                            if (result.success) {
+                                let oldData = vm.commodities;
+                                oldData.splice(key, 1);
+                                vm.commodities = oldData;
+                                toast('操作成功');
+                            } else {
+                                toast('操作失败');
+                            }
+                        });
+                        layer.close(index);
+                    }
+                });
+            }
+        }
+    });
+    // $(function () {
+    //     loadData();
+    // });
+
+    function loadData(cbOK, cbErr) {
+        $.ajax({
+            type: 'GET',
+            url: '/yapingzh/getCommodityArray.do',
+            data: {
+                "pageIndex": index,
+                "pageCount": pageCount
+            },
+            dataType: 'json',
+            success: function (result) {
+                totalPage = result.totalPage;
+                let newData = $.parseJSON(result.commodityArray);
+                for (let i in newData) {
+                    newData[i].introducePicture = '/yapingzh/picture/' + newData[i].introducePicture;
+                }
+                vm.commodities = vm.commodities.concat(newData);
+                cbOK && cbOK();
+            }, error: function () {
+                cbErr && cbErr();
+            }
+        });
+    }
+
+    function emptyData() {
+        let ary = vm.commodities;
+        ary.splice(0, ary.length);
+        vm.commodities = ary;
+        index = 1;
+        totalPage = 0;
+    }
+</script>
+</html>

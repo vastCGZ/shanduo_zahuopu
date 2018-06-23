@@ -152,6 +152,7 @@ body{
 
 .right ul {
   list-style: none;
+  overflow-y: scroll;
 }
 
 .class-title {
