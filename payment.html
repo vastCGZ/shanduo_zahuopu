@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/payment.css">
     <script src="../js/jquery-3.3.1.js"></script>
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="js/store_service.js"></script>
     <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
@@ -65,7 +65,7 @@
         <!--商品-->
         <div class="body_commodity">
             <!--单个商品-->
-            <div v-for="item in cart" class="dis_flex">
+            <div v-for="item in cart" v-if="item.count>0" class="dis_flex">
                 <div>
                     <div class="body_commodity_pic">
                         <div :style="item.picture.myStyle"></div>
@@ -92,10 +92,15 @@
         </div>
     </div>
     <footer>
-        <div class="dis_flex" @click="submitOrder">
+        <div v-if="in_operation" class="dis_flex" @click="submitOrder">
             <span>微信支付</span>
             <span>&nbsp;￥&nbsp;</span>
             <span>{{totalPrice}}</span>
+        </div>
+        <div class="dis_flex" v-else>
+            <span>店家休息中</span>
+            <span></span>
+            <span></span>
         </div>
     </footer>
 </div>
@@ -109,7 +114,13 @@
             cart: null,
             totalPrice: 0,
             contactInfo: null,
-            remarks: ''
+            remarks: '',
+            in_operation: true,
+            currentTime: null
+        }, mounted: function () {
+            setInterval(function () {
+                vm.currentTime = new Date().getTime();
+            }, 1000);
         },
         methods: {
             goBack() {
@@ -133,15 +144,17 @@
                     let commodityOrder = {
                         openid: openid,
                         remarks: vm.remarks,
-                        userAddress: vm.contactInfo.recevername + ';' + vm.contactInfo.recevertel + ';' + vm.contactInfo.cityName + '/' + vm.contactInfo.countryName + '/' + vm.contactInfo.receveraddr
+                        userAddress: vm.contactInfo.recevername + ';' + vm.contactInfo.recevertel + ';' + vm.contactInfo.cityName + '%' + vm.contactInfo.countryName + '%' + vm.contactInfo.receveraddr
                     };
-                    $.each(vm.cart, function (i, commdity) {
-                        orderDetails.push({
-                            commodityId: commdity.commodityId,
-                            price: commdity.commodityPrice,
-                            commodityName: commdity.commodityName,
-                            commodityNumber: commdity.count
-                        });
+                    $.each(vm.cart, function (i, commodity) {
+                        if (commodity.count > 0) {
+                            orderDetails.push({
+                                commodityId: commodity.commodityId,
+                                price: commodity.commodityPrice,
+                                commodityName: commodity.commodityName,
+                                commodityNumber: commodity.count
+                            });
+                        }
                     });
                     $.ajax({
                         type: "POST",
@@ -187,10 +200,21 @@
         }
     });
     vm.$watch('cart', function () {
+        let price = 0;
         $.each(vm.cart, function (i, item) {
-            vm.totalPrice += parseFloat(item.subtotal);
+            price += parseFloat(item.subtotal);
         });
-        vm.totalPrice.toFixed(2);
+        vm.totalPrice = price.toFixed(2);
+    });
+    let startTime = new Date();
+    startTime.setHours(9);
+    let endTime = new Date();
+    endTime.setHours(19);
+    endTime.setMinutes(29);
+    vm.$watch('currentTime', function () {
+        if (startTime.getTime() > vm.currentTime || vm.currentTime > endTime.getTime()) {
+            vm.in_operation = false;
+        }
     });
     $(function () {
         init_wx_js_sdk(href, function (result) {

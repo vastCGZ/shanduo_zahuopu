@@ -35,10 +35,8 @@ function cartAction(actionMode, obj, cbOK, cbErr) {
                 let count = cartItem.count;
                 if (count > 0) {
                     count--;
-                    if (count >= 0) {
-                        cartItem.count = count;
-                        objectStore.put(cartItem);
-                    }
+                    cartItem.count = count;
+                    objectStore.put(cartItem);
                 }
             }
         } else {
@@ -59,6 +57,7 @@ function cartAction(actionMode, obj, cbOK, cbErr) {
 function delCommodity(commodityId) {
     window.db.transaction(["cart"], "readwrite").objectStore("cart").delete(commodityId);
 }
+
 //清空购物车
 function emptyDB() {
     let transaction = window.db.transaction(["cart"], "readwrite");

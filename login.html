@@ -57,13 +57,12 @@
                         "userInfo.password": encode64(vm.userInfo.password)
                     },
                     success: function (result) {
-                        console.log(result);
                         if (result.success) {
                             toast('登录成功!');
                             localStorage.userId = result.userId;
-                            localStorage.deliverRegion = result.deliverRegion;
                             setTimeout(function () {
                                 if (result.deliverRegion) {
+                                    localStorage.deliverRegion = result.deliverRegion;
                                     location.href = 'orderList.html';
                                 } else {
                                     location.href = 'commodityManage.html';
