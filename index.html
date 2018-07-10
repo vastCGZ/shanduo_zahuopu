@@ -216,7 +216,6 @@
             downCallback() {
                 let that = this;
                 emptyData();
-                pageIndex++;
                 adapter(currentClassifyid, function () {
                     that.mescroll.endByPage(pageCount, totalPage);
                 }, function () {
