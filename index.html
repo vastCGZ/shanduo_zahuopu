@@ -21,9 +21,14 @@
     <script src="js/service.js"></script>
     <script src="js/store_service.js"></script>
     <title>首页</title>
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div id="vueData">
+<div id="vueData" class="mescroll">
     <header class="shop">
         <div class="title_header dis_flex">
             <div>
@@ -44,6 +49,9 @@
             </div>
         </div>
     </header>
+    <div class="time">
+        <p>营业时间:9:00-19:30</p>
+    </div>
     <div class="body">
         <article id="menu">
             <div class="swiper-container">
@@ -64,7 +72,7 @@
                     <div class="swiper-wrapper tab-content">
                         <!--类别1-->
                         <div class="swiper-slide tab-pane fade in active" id="One1">
-                            <div id="mescroll" class="content mescroll">
+                            <div class="content">
                                 <div class="right">
                                     <ul>
                                         <!--类别商品-->
@@ -172,8 +180,8 @@
     </footer>
 </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="../js/mescroll.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
     let code = GetQueryString('code');
     let pageIndex = 1, pageCount = 20, totalPage = 0, itemIndex = 0, currentClassifyid;
@@ -183,15 +191,20 @@
             classify: [],
             commodityArray: [],
             currentCommodity: null,
-            cart: null,
+            cart: [],
             totalPrice: 0,
-            totalCount: 0
+            totalCount: 0,
+            mescroll: null
         },
         mounted: function () {
             let that = this;
-            that.mescroll = new MeScroll("mescroll", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+            that.mescroll = new MeScroll("vueData", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
                 up: {
-                    callback: that.upCallback, //上拉回调
+                    callback: that.upCallback, //
+                    auto: false
+                }, down: {
+                    callback: that.downCallback,
+                    auto: false
                 }
             });
             //隐藏购物车
@@ -200,37 +213,26 @@
             $('#outerdiv').hide();
         },
         methods: {
-            upCallback(page) {
+            downCallback() {
                 let that = this;
-                if (vm.classify.length === 0) {
-                    getClassify(function (result) {
-                        vm.classify = result.classify;
-                        currentClassifyid = vm.classify[0].id;
-                        adapter(currentClassifyid,function () {
-                            if (totalPage > pageIndex) {
-                                pageIndex++;
-                                that.mescroll.endSuccess(pageCount, true);
-                            } else {
-                                that.mescroll.endSuccess(pageCount, false);
-                            }
-                        }, function () {
-                            that.mescroll.endErr();
-                        });
-                    });
-                }else {
-                    if (page.num === 1) {
-                        emptyData();
-                    }
-                    adapter(currentClassifyid,function () {
-                        if (totalPage > pageIndex) {
-                            pageIndex++;
-                            that.mescroll.endSuccess(pageCount, true);
-                        } else {
-                            that.mescroll.endSuccess(pageCount, false);
-                        }
+                emptyData();
+                adapter(currentClassifyid, function () {
+                    that.mescroll.endByPage(pageCount, totalPage);
+                }, function () {
+                    that.mescroll.endErr();
+                });
+            },
+            upCallback() {
+                let that = this;
+                if (totalPage > pageIndex) {
+                    pageIndex++;
+                    adapter(currentClassifyid, function () {
+                        that.mescroll.endByPage(pageCount, totalPage);
                     }, function () {
                         that.mescroll.endErr();
                     });
+                } else {
+                    that.mescroll.endErr();
                 }
             },
             imgShow() {
@@ -255,7 +257,6 @@
                     });
 
                 });
-                notifyDataSetChanged();
             },
             emptyCart() {
                 emptyDB();
@@ -267,15 +268,12 @@
                 cartAction(action, {commodityId: commodityId}, function () {
                     queryCartAll(function (res) {
                         vm.cart = res;
-                        notifyDataSetChanged();
                     });
                 }, function () {
                     queryCartAll(function (res) {
                         vm.cart = res;
-                        notifyDataSetChanged();
                     });
                 });
-
             },
             addon(commodityId, commodityName, commodityPrice, commodityDesc, commodityPicture) {
                 cartAction('add', {
@@ -288,12 +286,10 @@
                 }, function () {
                     queryCartAll(function (res) {
                         vm.cart = res;
-                        notifyDataSetChanged();
                     });
                 }, function () {
                     queryCartAll(function (res) {
                         vm.cart = res;
-                        notifyDataSetChanged();
                     });
                 });
 
@@ -359,7 +355,7 @@
     });
 
     function notifyDataSetChanged() {
-        if (vm.cart && vm.cart.length > 0) {
+        if (vm.cart.length > 0) {
             for (let i = 0; i < vm.cart.length; i++) {
                 for (let j = 0; j < vm.commodityArray.length; j++) {
                     if (vm.cart[i].commodityId === vm.commodityArray[j].id) {
@@ -383,16 +379,20 @@
         if (!openid) {
             if (code) {
                 getOpenid(code);
+            } else {
+                location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0870cb2d63b008d&redirect_uri=https://yapinkeji.com/yapingzh/shanduo_zahuopu/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
             }
-            // else {
-            //     location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0870cb2d63b008d&redirect_uri=https://yapinkeji.com/yapingzh/shanduo_zahuopu/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
-            // }
         }
+        getClassify(function (result) {
+            vm.classify = result.classify;
+            currentClassifyid = vm.classify[0].id;
+            adapter(currentClassifyid);
+        });
     });
 
     function adapter(classifyId, cbOK, cbErr) {
         getGoodsByClassifyId(classifyId, pageIndex, pageCount, function (res) {
-            let newData = $.parseJSON(res.commodityArray);
+            let newData = res.commodityArray;
             for (let i in newData) {
                 newData[i].picture = {
                     myStyle: {backgroundImage: "url('/yapingzh/picture/" + newData[i].introducePicture + "')"},
@@ -404,7 +404,6 @@
             queryCartAll(function (res) {
                 if (res.length > 0) {
                     vm.cart = res;
-                    notifyDataSetChanged();
                 }
             });
             cbOK && cbOK();
