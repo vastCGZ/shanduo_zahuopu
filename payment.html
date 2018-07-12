@@ -133,7 +133,7 @@
                     let commodityOrder = {
                         openid: openid,
                         remarks: vm.remarks,
-                        userAddress: vm.contactInfo.recevername + ';' + vm.contactInfo.recevertel + ';' + vm.contactInfo.cityName + '/' + vm.contactInfo.countryName + '/' + vm.contactInfo.receveraddr
+                        userAddress: vm.contactInfo.recevername + ';' + vm.contactInfo.recevertel + ';' + vm.contactInfo.cityName + '%' + vm.contactInfo.countryName + '%' + vm.contactInfo.receveraddr
                     };
                     $.each(vm.cart, function (i, commdity) {
                         orderDetails.push({
@@ -187,10 +187,11 @@
         }
     });
     vm.$watch('cart', function () {
+        let price = 0;
         $.each(vm.cart, function (i, item) {
-            vm.totalPrice += parseFloat(item.subtotal);
+            price += parseFloat(item.subtotal);
         });
-        vm.totalPrice.toFixed(2);
+        vm.totalPrice = price.toFixed(2);
     });
     $(function () {
         init_wx_js_sdk(href, function (result) {

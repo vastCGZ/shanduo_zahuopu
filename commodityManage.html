@@ -51,7 +51,6 @@
 </body>
 <script>
     // 页数
-    let index = 1;
     let totalPage = 0;
     const pageCount = 20;
     let vm = new Vue({
@@ -70,14 +69,13 @@
                 let that = this;
                 if (page.num === 1) {
                     emptyData();
+                    totalPage = 0;
                 }
-                loadData(function () {
-                    if (totalPage > index) {
-                        index++;
-                        that.mescroll.endSuccess(pageCount, true);
-                    } else {
-                        that.mescroll.endSuccess(pageCount, false);
+                loadData(page.num, function () {
+                    if (totalPage > page.num) {
+                        page.num++;
                     }
+                    that.mescroll.endByPage(pageCount, totalPage);
                 }, function () {
                     that.mescroll.endErr();
                 });
@@ -131,7 +129,7 @@
     //     loadData();
     // });
 
-    function loadData(cbOK, cbErr) {
+    function loadData(index, cbOK, cbErr) {
         $.ajax({
             type: 'GET',
             url: '/yapingzh/getCommodityArray.do',
@@ -158,7 +156,6 @@
         let ary = vm.commodities;
         ary.splice(0, ary.length);
         vm.commodities = ary;
-        index = 1;
         totalPage = 0;
     }
 </script>
