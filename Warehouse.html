@@ -14,13 +14,14 @@
     <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/shop.css">
+    <link rel="stylesheet" href="css/Warehouse.css">
     <link rel="stylesheet" type="text/css" href="../css/mescroll.min.css">
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
     <script src="js/service.js"></script>
     <script src="js/store_service.js"></script>
-    <title>店铺</title>
+    <title>商品选择</title>
     <style type="text/css">
         [v-cloak] {
             display: none;
@@ -29,29 +30,6 @@
 </head>
 <body>
 <div id="vueData" class="mescroll">
-    <header class="shop">
-        <div class="title_header dis_flex">
-            <div>
-                <img src="img/return_2.png" alt="">
-            </div>
-            <div>
-                <span>闪多便利超市</span>
-            </div>
-            <div></div>
-        </div>
-        <div class="dis_flex">
-            <div class="dynamic_pic title_pic">
-                <div style="background-image: url('img/rectangle_2.png')"></div>
-            </div>
-            <div class="dis_flex">
-                <span>公告:</span>
-                <span>需要香烟的请在备注栏备注，谢谢!</span>
-            </div>
-        </div>
-    </header>
-    <div class="time">
-        <p>营业时间:9:00-19:30</p>
-    </div>
     <div class="body">
         <article id="menu">
             <div class="swiper-container">
@@ -97,15 +75,7 @@
                                                         <div class="number dis_flex">
                                                             <span class="price"
                                                                   @click="onclick3(index)">￥{{commodity.price}}</span>
-                                                            <p class="plan dis_flex">
-                                                                <a href="javascript:"
-                                                                   @click.prevent="addoff(commodity.id)"
-                                                                   class="add_left" v-if="commodity.count>0"></a>
-                                                                <span v-if="commodity.count>0">{{commodity.count}}</span>
-                                                                <a href="javascript:"
-                                                                   @click.prevent="addon(commodity.id,commodity.name,commodity.price,commodity.introduceDetails,commodity.picture.imgPath)"
-                                                                   class="add_right"></a>
-                                                            </p>
+                                                            <input type="checkbox" name="Drink" value="cola" checked="checked" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -144,8 +114,7 @@
     </div>
     <footer>
         <div class="dis_flex">
-            <a href="#" @click.prevent="gwcToggle()">购物车:&nbsp;&nbsp;&nbsp;&nbsp;￥{{totalPrice}}</a>
-            <a href="javascript:" @click="submitOrderView">去结算</a>
+            <a href="javascript:" @click="submitOrderView">确认</a>
         </div>
         <div class="gwcTog">
             <div class="dis_flex">
@@ -318,15 +287,15 @@
                 });
             },
             onclick1(index) {
-                vm.currentCommodity = vm.commodityArray[index];
+                vm.currentCommodity = vm.commodityArray[shop];
                 vm.imgShow();
             },
             onclick2(index) {
-                vm.currentCommodity = vm.commodityArray[index];
+                vm.currentCommodity = vm.commodityArray[shop];
                 vm.imgShow();
             },
             onclick3(index) {
-                vm.currentCommodity = vm.commodityArray[index];
+                vm.currentCommodity = vm.commodityArray[shop];
                 vm.imgShow()
             },
             submitOrderView() {
